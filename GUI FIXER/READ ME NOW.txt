@@ -1,0 +1,20 @@
+if the gui is not showing up unless you have your vr connected,
+you need the BepInEx.cfg file to make it work without your vr.
+
+so take the file and put them in your, BepInEx config folder
+so go to your gorilla tag game folder, then go to the BepInEx folder
+then go to "config" and delete the "BepInEx.cg" file that is already in there
+then drop in the new one and open your game
+
+you know you have done it right when a black screen pops up
+when you launch the game
+
+Hope this helps :3
+
+
+
+
+(not important stuff)
+PROTECTION NOTE: THIS TEMPLATE IS PROTECTED MATERIAL FROM "Project Malachi". 
+IF ANY MATERIAL FROM "MalachiTemp" FOUND IN ANY OTHER PROJECT/THING WITHOUT 
+CREDIT OR PERMISSION MUST AND WILL BE REMOVED IMMEDIATELY
