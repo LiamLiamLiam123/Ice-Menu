@@ -30,7 +30,7 @@ namespace MalachiTemp.UI
     }
     internal class WristMenu : MonoBehaviour
     {
-        public static string MenuTitle = "Malachi Temp"; // this is the menu name, you can change it to whatever you want
+        public static string MenuTitle = "Ice Menu"; // this is the menu name, you can change it to whatever you want
         public static Font MenuFont = Resources.GetBuiltinResource<Font>("Arial.ttf"); // font of the text on the menu
         // Double click a grey square to open it, click the - in the box to the left of "#region" to close it
         #region Main
@@ -42,16 +42,16 @@ namespace MalachiTemp.UI
             new ButtonInfo { buttonText = "Load Buttons", method =() => Mods.Load1(), enabled = false, nontoggleable = true, toolTip = "Load the buttons you saved!"},
             new ButtonInfo { buttonText = "Settings", method =() => Mods.Settings(), enabled = false, toolTip = "Go to Settings!"},
             // if u dont want categories delete the category buttons below and put what mods u want below
-            new ButtonInfo { buttonText = "Category 1", method =() => Mods.Cat1(), enabled = false, toolTip = "Go to Category 1!"},
-            new ButtonInfo { buttonText = "Category 2", method =() => Mods.Cat2(), enabled = false, toolTip = "Go to Category 2!"},
-            new ButtonInfo { buttonText = "Category 3", method =() => Mods.Cat3(), enabled = false, toolTip = "Go to Category 3!"},
-            new ButtonInfo { buttonText = "Category 4", method =() => Mods.Cat4(), enabled = false, toolTip = "Go to Category 4!"},
-            new ButtonInfo { buttonText = "Category 5", method =() => Mods.Cat5(), enabled = false, toolTip = "Go to Category 5!"},
-            new ButtonInfo { buttonText = "Category 6", method =() => Mods.Cat6(), enabled = false, toolTip = "Go to Category 6!"},
-            new ButtonInfo { buttonText = "Category 7", method =() => Mods.Cat7(), enabled = false, toolTip = "Go to Category 7!"},
-            new ButtonInfo { buttonText = "Category 8", method =() => Mods.Cat8(), enabled = false, toolTip = "Go to Category 8!"},
-            new ButtonInfo { buttonText = "Category 9", method =() => Mods.Cat9(), enabled = false, toolTip = "Go to Category 9!"},
-            new ButtonInfo { buttonText = "Category 10", method =() => Mods.Cat10(), enabled = false, toolTip = "Go to Category 10!"},
+            new ButtonInfo { buttonText = "Mods", method =() => Mods.Cat1(), enabled = false, toolTip = "All the premade mods!"},
+            new ButtonInfo { buttonText = "Movement", method =() => Mods.Cat2(), enabled = false, toolTip = "Movement and gravity mods!"},
+            new ButtonInfo { buttonText = "Visuals", method =() => Mods.Cat3(), enabled = false, toolTip = "ESP, FOV and visual mods!"},
+            new ButtonInfo { buttonText = "Fun", method =() => Mods.Cat4(), enabled = false, toolTip = "Guns and fun mods!"},
+            new ButtonInfo { buttonText = "Speed & Jump", method =() => Mods.Cat5(), enabled = false, toolTip = "Jump and speed boosts!"},
+            new ButtonInfo { buttonText = "Rig", method =() => Mods.Cat6(), enabled = false, toolTip = "Rig and scale mods!"},
+            new ButtonInfo { buttonText = "Extra", method =() => Mods.Cat7(), enabled = false, toolTip = "Extra useful mods!"},
+            new ButtonInfo { buttonText = "Protection", method =() => Mods.Cat8(), enabled = false, toolTip = "Anti tag and protection!"},
+            new ButtonInfo { buttonText = "Cosmetics", method =() => Mods.Cat9(), enabled = false, toolTip = "Cosmetic mods!"},
+            new ButtonInfo { buttonText = "More", method =() => Mods.Cat10(), enabled = false, toolTip = "More fun mods!"},
             // u can change the button name and the tool tip to whatever u want just make sure that when u change the button name u change the "Exit" thing for that category
         };
         #endregion
@@ -83,7 +83,7 @@ namespace MalachiTemp.UI
         // all your premade mods are in here, you can move them anywhere you would like
         public static List<ButtonInfo> CatButtons1 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 1", method =() => Mods.Cat1(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Exit Mods", method =() => Mods.Cat1(), enabled = false, toolTip = "Go to Main!"},
             new ButtonInfo { buttonText = "Platforms", method =() => Mods.Platforms(), enabled = false, toolTip = "Platforms!"},
             new ButtonInfo { buttonText = "Invis Platforms", method =() => Mods.Invisableplatforms(), enabled = false, toolTip = "Platforms but invisable!"},
             new ButtonInfo { buttonText = "Ghost Monke", method =() => Mods.Ghostmonke(), enabled = false, toolTip = "Ghost monke!"},
@@ -98,79 +98,84 @@ namespace MalachiTemp.UI
         #region Category 2
         public static List<ButtonInfo> CatButtons2 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 2", method =() => Mods.Cat2(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Movement", method =() => Mods.Cat2(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Hover", method =() => Mods.Hover(), disableMethod =() => Mods.HoverOff(), enabled = false, toolTip = "Makes you hover in the air!"},
+            new ButtonInfo { buttonText = "Low Gravity", method =() => Mods.LowGravity(), enabled = false, toolTip = "Way lower gravity!"},
+            new ButtonInfo { buttonText = "High Gravity", method =() => Mods.HighGravity(), enabled = false, toolTip = "Way higher gravity!"},
+            new ButtonInfo { buttonText = "Normal Gravity", method =() => Mods.NormalGravity(), enabled = false, nontoggleable = true, toolTip = "Reset gravity to normal!"},
+            new ButtonInfo { buttonText = "Speed Boost", method =() => Mods.SpeedBoost(), disableMethod =() => Mods.SpeedBoostOff(), enabled = false, toolTip = "Hold right grip to sprint!"},
         };
         #endregion
         #region Category 3
         public static List<ButtonInfo> CatButtons3 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 3", method =() => Mods.Cat3(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Visuals", method =() => Mods.Cat3(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Box ESP", method =() => Mods.BoxESP(), enabled = false, toolTip = "Boxes around all players!"},
+            new ButtonInfo { buttonText = "Radar", method =() => Mods.Radar(), disableMethod =() => Mods.RadarOff(), enabled = false, toolTip = "Shows every player on screen!"},
+            new ButtonInfo { buttonText = "Always Visible", method =() => Mods.AlwaysVisible(), disableMethod =() => Mods.AlwaysVisibleOff(), enabled = false, toolTip = "Players always render even far away!"},
+            new ButtonInfo { buttonText = "Glow Hands", method =() => Mods.GlowHands(), enabled = false, toolTip = "Hand orbs following your hands!"},
+            new ButtonInfo { buttonText = "FOV +", method =() => Mods.FOVPlus(), enabled = false, nontoggleable = true, toolTip = "Increase the camera FOV!"},
+            new ButtonInfo { buttonText = "FOV -", method =() => Mods.FOVMinus(), enabled = false, nontoggleable = true, toolTip = "Decrease the camera FOV!"},
+            new ButtonInfo { buttonText = "FOV Reset", method =() => Mods.FOVReset(), enabled = false, nontoggleable = true, toolTip = "Reset the camera FOV!"},
         };
         #endregion
         #region Category 4
         public static List<ButtonInfo> CatButtons4 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 4", method =() => Mods.Cat4(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Fun", method =() => Mods.Cat4(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Tag Gun", method =() => Mods.TagGun(), enabled = false, toolTip = "Aim at a player and pull the trigger to tag them!"},
+            new ButtonInfo { buttonText = "Teleport Gun", method =() => Mods.TeleportGun(), enabled = false, toolTip = "Aim and hold the trigger to teleport!"},
+            new ButtonInfo { buttonText = "Invisible Hands", method =() => Mods.InvisibleHands(), disableMethod =() => Mods.InvisibleHandsOff(), enabled = false, toolTip = "Hides your hands but shows orbs!"},
+            new ButtonInfo { buttonText = "RGB Monke", method =() => Mods.RGBMonke(), enabled = false, toolTip = "Your monke does a rainbow!"},
+            new ButtonInfo { buttonText = "Reset Monke Color", method =() => Mods.ResetMonkeColor(), enabled = false, nontoggleable = true, toolTip = "Reset your monke color!"},
         };
         #endregion
         #region Category 5
         public static List<ButtonInfo> CatButtons5 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 5", method =() => Mods.Cat5(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Speed & Jump", method =() => Mods.Cat5(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Moon Jump", method =() => Mods.MoonJump(), disableMethod =() => Mods.MoonJumpOff(), enabled = false, toolTip = "Way stronger jumps!"},
+            new ButtonInfo { buttonText = "Super Jump", method =() => Mods.SuperJump(), disableMethod =() => Mods.SuperJumpOff(), enabled = false, toolTip = "Massive jump limit!"},
+            new ButtonInfo { buttonText = "Dash", method =() => Mods.Dash(), enabled = false, toolTip = "Press left grip to dash forward!"},
         };
         #endregion
         #region Category 6
         public static List<ButtonInfo> CatButtons6 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 6", method =() => Mods.Cat6(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Rig", method =() => Mods.Cat6(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Big Monke", method =() => Mods.BigMonke(), enabled = false, nontoggleable = true, toolTip = "Make your monke big!"},
+            new ButtonInfo { buttonText = "Small Monke", method =() => Mods.SmallMonke(), enabled = false, nontoggleable = true, toolTip = "Make your monke small!"},
+            new ButtonInfo { buttonText = "Reset Scale", method =() => Mods.ResetScale(), enabled = false, nontoggleable = true, toolTip = "Reset your monke size!"},
         };
         #endregion
         #region Category 7
         public static List<ButtonInfo> CatButtons7 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 7", method =() => Mods.Cat7(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Extra", method =() => Mods.Cat7(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Player Count", method =() => Mods.PlayerCount(), enabled = false, nontoggleable = true, toolTip = "How many players are in the room!"},
+            new ButtonInfo { buttonText = "Room Info", method =() => Mods.RoomInfo(), enabled = false, nontoggleable = true, toolTip = "Shows the current room name!"},
+            new ButtonInfo { buttonText = "Clear Notis", method =() => Mods.ClearNotis(), enabled = false, nontoggleable = true, toolTip = "Clears all notifications!"},
+            new ButtonInfo { buttonText = "Last Noti", method =() => Mods.LastNoti(), enabled = false, nontoggleable = true, toolTip = "Shows the last notification!"},
         };
         #endregion
         #region Category 8
         public static List<ButtonInfo> CatButtons8 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 8", method =() => Mods.Cat8(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Protection", method =() => Mods.Cat8(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Anti Tag", method =() => Mods.AntiTag(), disableMethod =() => Mods.AntiTagOff(), enabled = false, toolTip = "You can never be tagged!"},
         };
         #endregion
         #region Category 9
         public static List<ButtonInfo> CatButtons9 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 9", method =() => Mods.Cat9(), enabled = false, toolTip = "Go to Main!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
-            new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
+            new ButtonInfo { buttonText = "Exit Cosmetics", method =() => Mods.Cat9(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Strobe Monke", method =() => Mods.StrobeMonke(), enabled = false, toolTip = "Strobe light monke!"},
         };
         #endregion
         #region Category 10
         public static List<ButtonInfo> CatButtons10 = new List<ButtonInfo>
         {
-            new ButtonInfo { buttonText = "Exit Category 10", method =() => Mods.Cat10(), enabled = false, toolTip = "Go to Main!"},
+            new ButtonInfo { buttonText = "Exit More", method =() => Mods.Cat10(), enabled = false, toolTip = "Go to Main!"},
             new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
             new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},
             new ButtonInfo { buttonText = "PLACEHOLDER", method =() => Mods.PLACEHOLDER(), enabled = false, toolTip = "PLACEHOLDER!"},

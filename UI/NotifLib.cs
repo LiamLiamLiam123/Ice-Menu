@@ -84,6 +84,10 @@ namespace GTAG_NotificationLib
         }
         private void FixedUpdate()
         {
+            if (MainCamera == null || HUDObj2 == null || Testtext == null)
+            {
+                return;
+            }
             if (HasInit == false)
             {
                 if (GameObject.Find("Main Camera") != null)

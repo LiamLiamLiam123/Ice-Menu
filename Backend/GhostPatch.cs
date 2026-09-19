@@ -29,16 +29,6 @@ namespace MalachiTemp.Backend
         }
     }
 
-    [HarmonyPatch(typeof(VRRig), "CheckDistance")]
-    public class MoreBullshit
-    {
-        public static bool enabled = false;
-        public static void Postfix(ref bool __result, Vector3 position, float max)
-        {
-            if (enabled)
-                __result = true;
-        }
-    }
     [HarmonyPatch(typeof(VRRig), "PostTick")]
     public static class Bullshit2
     {

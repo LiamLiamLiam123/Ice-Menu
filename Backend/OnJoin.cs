@@ -16,7 +16,14 @@ namespace MalachiTemp.Backend
     {
         private static void Prefix(Player newPlayer)
         {
-            NotifiLib.SendNotification("[<color=blue>ROOM</color>] Player: " + newPlayer.NickName + " Joined Lobby");
+            try
+            {
+                if (newPlayer != null)
+                {
+                    NotifiLib.SendNotification("[<color=blue>ROOM</color>] Player: " + newPlayer.NickName + " Joined Lobby");
+                }
+            }
+            catch { }
         }
     }
 
@@ -25,10 +32,14 @@ namespace MalachiTemp.Backend
     {
         private static void Prefix(Player otherPlayer)
         {
-            if (otherPlayer != PhotonNetwork.LocalPlayer)
+            try
+        {
+            if (otherPlayer != null && otherPlayer != PhotonNetwork.LocalPlayer)
             {
                 NotifiLib.SendNotification("[<color=blue>ROOM</color>] Player: " + otherPlayer.NickName + " Left Lobby");
             }
+        }
+        catch { }
         }
     }
 }

@@ -15,10 +15,14 @@ namespace MalachiTemp.Backend
     {
         private static bool Prefix(string susReason, string susId, string susNick)
         {
-            if (susReason != "empty rig" && susId == PhotonNetwork.LocalPlayer.UserId)
+            try
             {
-                NotifiLib.SendNotification("[<color=red>ANTICHEAT</color>] REPORTED FOR: " + susReason);
+                if (susReason != "empty rig" && susId == PhotonNetwork.LocalPlayer.UserId)
+                {
+                    NotifiLib.SendNotification("[<color=red>ANTICHEAT</color>] REPORTED FOR: " + susReason);
+                }
             }
+            catch { }
             return false;
         }
     }

@@ -193,6 +193,329 @@ namespace MalachiTemp.Backend
             }
         }
         #endregion
+        #region New Mods
+        // all the new mods added to Ice Menu
+        // ================= MOVEMENT =================
+        public static bool hoverMode;
+        private static System.Reflection.PropertyInfo hoverProp = typeof(GorillaLocomotion.GTPlayer).GetProperty("enableHoverMode", System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        public static void Hover()
+        {
+            if (!hoverMode)
+            {
+                hoverMode = true;
+                hoverProp.SetValue(GorillaLocomotion.GTPlayer.Instance, true);
+                NotifiLib.SendNotification("<color=white>[</color><color=blue>MOVEMENT</color><color=white>] Hover Enabled</color>");
+            }
+        }
+        public static void HoverOff()
+        {
+            if (hoverMode)
+            {
+                hoverMode = false;
+                hoverProp.SetValue(GorillaLocomotion.GTPlayer.Instance, false);
+                NotifiLib.SendNotification("<color=white>[</color><color=blue>MOVEMENT</color><color=white>] Hover Disabled</color>");
+            }
+        }
+        public static void LowGravity()
+        {
+            Physics.gravity = new Vector3(0f, -4.9f, 0f);
+        }
+        public static void HighGravity()
+        {
+            Physics.gravity = new Vector3(0f, -30f, 0f);
+        }
+        public static void NormalGravity()
+        {
+            Physics.gravity = new Vector3(0f, -9.81f, 0f);
+            NotifiLib.SendNotification("<color=white>[</color><color=blue>MOVEMENT</color><color=white>] Gravity Reset To Normal</color>");
+        }
+        public static bool speedBoost;
+        public static void SpeedBoost()
+        {
+            speedBoost = true;
+            // hold right grip to sprint forward
+            if (WristMenu.gripDownR)
+            {
+                GorillaLocomotion.GTPlayer.Instance.AddForce(GorillaLocomotion.GTPlayer.Instance.transform.forward * 0.06f, ForceMode.VelocityChange);
+            }
+        }
+        public static void SpeedBoostOff()
+        {
+            speedBoost = false;
+        }
+        public static bool dashHeld;
+        public static void Dash()
+        {
+            // press left grip to dash forward
+            if (WristMenu.gripDownL && !dashHeld)
+            {
+                dashHeld = true;
+                GorillaLocomotion.GTPlayer.Instance.AddForce(GorillaLocomotion.GTPlayer.Instance.transform.forward * 14f, ForceMode.Impulse);
+                NotifiLib.SendNotification("<color=white>[</color><color=blue>MOVEMENT</color><color=white>] DASH!</color>");
+            }
+            if (!WristMenu.gripDownL)
+            {
+                dashHeld = false;
+            }
+        }
+        // ================= SCALE =================
+        public static void BigMonke()
+        {
+            GorillaLocomotion.GTPlayer.Instance.SetScaleMultiplier(1.4f);
+        }
+        public static void SmallMonke()
+        {
+            GorillaLocomotion.GTPlayer.Instance.SetScaleMultiplier(0.6f);
+        }
+        public static void ResetScale()
+        {
+            GorillaLocomotion.GTPlayer.Instance.SetScaleMultiplier(1f);
+            NotifiLib.SendNotification("<color=white>[</color><color=magenta>SCALE</color><color=white>] Size Reset</color>");
+        }
+        // ================= VISUAL =================
+        public static void BoxESP()
+        {
+            foreach (Player p in PhotonNetwork.PlayerListOthers)
+            {
+                if (p == null) continue;
+                VRRig rig = RigShit.GetVRRigFromPlayer(p);
+                if (rig == null) continue;
+                GameObject box = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                UnityEngine.Object.Destroy(box.GetComponent<Collider>());
+                UnityEngine.Object.Destroy(box.GetComponent<Rigidbody>());
+                box.transform.position = rig.transform.position + new Vector3(0f, -0.4f, 0f);
+                box.transform.localScale = new Vector3(0.7f, 1.1f, 0.7f);
+                box.transform.rotation = rig.transform.rotation;
+                box.GetComponent<Renderer>().material.color = CurrentESPColor;
+                UnityEngine.Object.Destroy(box, Time.deltaTime);
+            }
+        }
+        public static bool radar;
+        public static void Radar()
+        {
+            radar = true;
+            NotifiLib.SendNotification("<color=white>[</color><color=green>VISUALS</color><color=white>] Radar Enabled</color>");
+        }
+        public static void RadarOff()
+        {
+            radar = false;
+        }
+        private void OnGUI()
+        {
+            if (!radar) return;
+            try
+            {
+                Camera cam = Camera.main;
+                if (cam == null) return;
+                GUIStyle style = new GUIStyle();
+                style.fontSize = 20;
+                style.normal.textColor = CurrentESPColor;
+                foreach (Player p in PhotonNetwork.PlayerListOthers)
+                {
+                    if (p == null) continue;
+                    VRRig rig = RigShit.GetVRRigFromPlayer(p);
+                    if (rig == null) continue;
+                    Vector3 pos = cam.WorldToScreenPoint(rig.transform.position);
+                    int dist = (int)Vector3.Distance(rig.transform.position, cam.transform.position);
+                    if (pos.z > 0)
+                    {
+                        GUI.Label(new Rect(pos.x - 50f, Screen.height - pos.y, 120f, 20f), p.NickName + " (" + dist + "m)", style);
+                    }
+                    else
+                    {
+                        GUIStyle behind = new GUIStyle(style);
+                        behind.normal.textColor = Color.red;
+                        GUI.Label(new Rect(5f, 5f, 300f, 20f), p.NickName + " behind you (" + dist + "m)", behind);
+                    }
+                }
+            }
+            catch { }
+        }
+        public static void FOVPlus()
+        {
+            Camera cam = Camera.main;
+            if (cam != null) cam.fieldOfView = Mathf.Clamp(cam.fieldOfView + 10f, 20f, 160f);
+        }
+        public static void FOVMinus()
+        {
+            Camera cam = Camera.main;
+            if (cam != null) cam.fieldOfView = Mathf.Clamp(cam.fieldOfView - 10f, 20f, 160f);
+        }
+        public static void FOVReset()
+        {
+            Camera cam = Camera.main;
+            if (cam != null) cam.fieldOfView = 90f;
+            NotifiLib.SendNotification("<color=white>[</color><color=green>VISUALS</color><color=white>] FOV Reset To 90</color>");
+        }
+        public static bool alwaysVisible;
+        public static void AlwaysVisible()
+        {
+            if (!alwaysVisible)
+            {
+                alwaysVisible = true;
+                NotifiLib.SendNotification("<color=white>[</color><color=green>VISUALS</color><color=white>] All Players Always Visible</color>");
+            }
+            foreach (Player p in PhotonNetwork.PlayerListOthers)
+            {
+                if (p == null) continue;
+                VRRig rig = RigShit.GetVRRigFromPlayer(p);
+                if (rig == null) continue;
+                if (rig.mainSkin != null) rig.mainSkin.enabled = true;
+            }
+        }
+        public static void AlwaysVisibleOff()
+        {
+            if (alwaysVisible)
+            {
+                alwaysVisible = false;
+            }
+        }
+        public static void GlowHands()
+        {
+            DrawHandOrbs();
+        }
+        public static void StrobeMonke()
+        {
+            Color c = Color.HSVToRGB(Mathf.Repeat(Time.time * 2f, 1f), 1f, 1f);
+            VRRig.LocalRig.mainSkin.material.color = c;
+        }
+        // ================= RIG =================
+        public static void RGBMonke()
+        {
+            Color c = Color.HSVToRGB(Mathf.Repeat(Time.time * 0.3f, 1f), 1f, 1f);
+            VRRig.LocalRig.mainSkin.material.color = c;
+        }
+        public static void ResetMonkeColor()
+        {
+            VRRig.LocalRig.mainSkin.material.color = Color.white;
+        }
+        public static bool invisHands;
+        public static void InvisibleHands()
+        {
+            if (!invisHands)
+            {
+                invisHands = true;
+                GorillaTagger.Instance.rightHandTransform.gameObject.SetActive(false);
+                GorillaTagger.Instance.leftHandTransform.gameObject.SetActive(false);
+                DrawHandOrbs();
+                NotifiLib.SendNotification("<color=white>[</color><color=magenta>RIG</color><color=white>] Invisible Hands Enabled</color>");
+            }
+        }
+        public static void InvisibleHandsOff()
+        {
+            if (invisHands)
+            {
+                invisHands = false;
+                GorillaTagger.Instance.rightHandTransform.gameObject.SetActive(true);
+                GorillaTagger.Instance.leftHandTransform.gameObject.SetActive(true);
+            }
+        }
+        // ================= JUMP =================
+        public static void MoonJump()
+        {
+            VRRig.LocalRig.SetJumpMultiplierLocal(5f);
+            NotifiLib.SendNotification("<color=white>[</color><color=cyan>JUMP</color><color=white>] Moon Jump Enabled</color>");
+        }
+        public static void MoonJumpOff()
+        {
+            VRRig.LocalRig.SetJumpMultiplierLocal(1f);
+        }
+        public static float originalJumpLimit = -1f;
+        public static bool superJump;
+        public static void SuperJump()
+        {
+            if (!superJump)
+            {
+                superJump = true;
+                if (originalJumpLimit < 0f)
+                {
+                    originalJumpLimit = GorillaTagManager.instance.fastJumpLimit;
+                }
+                VRRig.LocalRig.SetJumpLimitLocal(100f);
+                NotifiLib.SendNotification("<color=white>[</color><color=cyan>JUMP</color><color=white>] Super Jump Enabled</color>");
+            }
+        }
+        public static void SuperJumpOff()
+        {
+            if (superJump)
+            {
+                superJump = false;
+                VRRig.LocalRig.SetJumpLimitLocal(originalJumpLimit);
+            }
+        }
+        // ================= PROTECTION =================
+        public static void AntiTag()
+        {
+            AntiTagPatch.enabled = true;
+            NotifiLib.SendNotification("<color=white>[</color><color=red>PROTECTION</color><color=white>] Anti-Tag Enabled</color>");
+        }
+        public static void AntiTagOff()
+        {
+            AntiTagPatch.enabled = false;
+        }
+        // ================= GUNS =================
+        public static void TagGun()
+        {
+            MakeGun(CurrentGunColor, new Vector3(0.15f, 0.15f, 0.15f), 0.025f, PrimitiveType.Sphere, GorillaLocomotion.GTPlayer.Instance.RightHand.controllerTransform, true, delegate
+            {
+                TryTagAtPointer();
+            }, delegate { });
+        }
+        public static void TryTagAtPointer()
+        {
+            VRRig rig = null;
+            if (raycastHit.collider != null)
+            {
+                rig = raycastHit.collider.GetComponentInParent<VRRig>();
+            }
+            if (rig == null)
+            {
+                Collider[] cols = Physics.OverlapSphere(raycastHit.point, 0.5f);
+                foreach (Collider c in cols)
+                {
+                    VRRig r = c.GetComponentInParent<VRRig>();
+                    if (r != null && !r.isLocal)
+                    {
+                        rig = r;
+                        break;
+                    }
+                }
+            }
+            if (rig != null && !rig.isLocal)
+            {
+                GorillaGameManager.instance.LocalTag(rig.Creator, PhotonNetwork.LocalPlayer, false, true);
+                NotifiLib.SendNotification("<color=white>[</color><color=red>TAG</color><color=white>] Tagged: " + rig.Creator.NickName + "</color>");
+            }
+        }
+        public static void TeleportGun()
+        {
+            MakeGun(CurrentGunColor, new Vector3(0.15f, 0.15f, 0.15f), 0.025f, PrimitiveType.Sphere, GorillaLocomotion.GTPlayer.Instance.RightHand.controllerTransform, true, delegate
+            {
+                if (raycastHit.collider != null)
+                {
+                    GorillaLocomotion.GTPlayer.Instance.transform.position = raycastHit.point + new Vector3(0f, 0.5f, 0f);
+                }
+            }, delegate { });
+        }
+        // ================= EXTRA =================
+        public static void PlayerCount()
+        {
+            NotifiLib.SendNotification("<color=white>[</color><color=green>PLAYERS</color><color=white>] Players In Room: " + PhotonNetwork.PlayerList.Length + "</color>");
+        }
+        public static void RoomInfo()
+        {
+            string room = PhotonNetwork.CurrentRoom != null ? PhotonNetwork.CurrentRoom.Name : "Not In A Room";
+            NotifiLib.SendNotification("<color=white>[</color><color=green>ROOM</color><color=white>] " + room + "</color>");
+        }
+        public static void ClearNotis()
+        {
+            NotifiLib.ClearAllNotifications();
+        }
+        public static void LastNoti()
+        {
+            NotifiLib.SendNotification("<color=white>[</color><color=green>NOTIS</color><color=white>] Last Noti: " + NotifiLib.PreviousNotifi + "</color>");
+        }
+        #endregion
         #region Save-Load Buttons & Settings
         public static void Save1()
         {
