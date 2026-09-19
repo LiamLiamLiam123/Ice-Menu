@@ -19,7 +19,7 @@ namespace Malachis_Temp
     {
         public const string Name = "malachistemp";
         public const string GUID = "malachis.temp";
-        public const string Version = "1.0";
+        public const string Version = "1.1";
 
         private bool patchedHarmony = false;
         [System.Serializable]
